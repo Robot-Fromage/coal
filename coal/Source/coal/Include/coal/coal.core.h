@@ -1,13 +1,13 @@
 /*************************************************************************
 *
-*   ULIS
+*   coal
 *__________________
 *
-* ULIS.Core.h
+* coal.core.h
 * Clement Berthaud - Layl
 * Please refer to LICENSE.md
 */
 
 #pragma once
 
-#include "coal/coal.char.h"
+#include "coal/coal.coal.h"

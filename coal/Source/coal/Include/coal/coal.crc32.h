@@ -1,9 +1,9 @@
 /*************************************************************************
 *
-*   ULIS
+*   coal
 *__________________
 *
-* ULIS.Base.CompileTime.CRC32.h
+* coal.crc32.h
 * Clement Berthaud - Layl
 * Please refer to LICENSE.md
 */
@@ -11,8 +11,7 @@
 #pragma once
 
 
-namespace ULIS {
-namespace _CT {
+namespace __coal__ {
 
 
 /////////////////////////////////////////////////////
@@ -84,8 +83,7 @@ struct MM<size, size, dummy>{
 
 
 // This don't take into account the nul char
-#define ULIS_COMPILE_TIME_CRC32_STR(x) (MM<sizeof(x)-1>::crc32(x))
+#define COAL_CRC32_STR(x) (MM<sizeof(x)-1>::crc32(x))
 
 
-} // namespace _CT
-} // namespace ULIS
+} // namespace __coal__

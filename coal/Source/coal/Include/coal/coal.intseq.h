@@ -13,9 +13,8 @@
 #include <type_traits>
 
 
-namespace ULIS {
-namespace _CT {
-
+namespace coal {
+namespace cpp11 {
 
 /// A type that represents a parameter pack of zero or more integers.
 template<typename T, T... I>
@@ -56,6 +55,6 @@ template<int N> using make_index_sequence = make_integer_sequence<std::size_t, N
 template<typename... Args> using index_sequence_for = make_index_sequence<sizeof...(Args)>;
 
 
-} // namespace _CT
-} // namespace ULIS
+} // namespace cpp11
+} // namespace coal
 
