@@ -81,6 +81,14 @@ make_coal( const char (&str)[N] )
 }
 
 
+template< int N, int L >
+constexpr coal< N + L - 1>
+operator+( const coal< N >& A, const coal< L >& B )
+{
+    return  A.append( B );
+}
+
+
 /////////////////////////////////////////////////////
 // coal utility macro
 /* utility shortcut for construction of coal */
