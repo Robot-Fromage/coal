@@ -1,0 +1,26 @@
+# Visual Studio Cache
+.vs/*
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Project Files for Windows
+*.sln
+*.vcxproj.*
+
+# Generated
+*/Generated/*
+*/Generated*/*
+
+# Content
+*/Content/*
+
+# Private config files
+**.pconfig**
+
+# Project config files
+ProjectConfigOverrides.cmake
+VisualStudio_Solution_MSVC_Config.cmake
+MinGW_Makefile_GCC_Config.cmake
+VisualStudio_Solution_CLANG_LLVM_Config.cmake

@@ -1,0 +1,1 @@
+SET( COAL_BUILD_TESTS           ON )

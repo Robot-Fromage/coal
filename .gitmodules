@@ -1,0 +1,3 @@
+[submodule "coal/Tools/Submodules/ProjectDependencies/ProjectDependencies"]
+	path = coal/Tools/Submodules/ProjectDependencies/ProjectDependencies
+	url = https://github.com/Robot-Fromage/ProjectDependencies
