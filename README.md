@@ -1,7 +1,7 @@
 # ULIS
-![alt text](http://clementberthaud.com/dev/dep/ULIS/media/com/ulis_100.png "ULIS")
+![alt text](http://clementberthaud.com/dev/dep/ULIS/media/com/ulis_100.png "coal")
 
-Unlimited Library for Image Software
+COnstexpr Alphanumeric Literals
 
 ## Requirements
 
@@ -28,4 +28,4 @@ https://www.python.org/
         - Clang LLVM xx
 
 ###### Links:
-https://visualstudio.microsoft.com/fr/downloads/  \
+https://visualstudio.microsoft.com/fr/downloads/
