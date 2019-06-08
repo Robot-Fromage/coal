@@ -15,11 +15,14 @@
 
 int main()
 {
-    coal a = coal_make( "Salut123" );
-    coal b = coal_make( "Mec" );
-    coal c = a.Append( b.s );
-    coal d = a.Append( b );
-    constexpr int e = a.Substring< 3 >( 5 ).ToInt();
+    coal a = coalFromString( "Salut123" );
+    coal b = coalFromString( "Mec" );
+    coal c = a.append( b.s );
+    coal d = a.append( b );
+    coal lel = coalFromString( "Jambon" ).prepend( "ok" );
+    coal z = a.copy();
+
+    constexpr int e = a.substring< 3 >( 5 ).toInt();
 
     std::cout << a << std::endl;
     std::cout << b << std::endl;
