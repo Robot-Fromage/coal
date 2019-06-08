@@ -33,7 +33,7 @@ struct  coal
     constexpr const char*   data()                              const { return s; }
     constexpr int           size()                              const { return N; }
     constexpr int           toInt()                             const { return stoi( s ); }
-    constexpr bool          isNumber()                          const { return is_number( s ); }
+    constexpr bool          isInt()                             const { return is_number( s ); }
     constexpr uint32_t      hash()                              const { return COAL_CRC32_STR( s ); }
     constexpr int           IndexOf( const char* w, int f=0 )   const { return indexof( w, s, f ); }
 
@@ -64,23 +64,78 @@ struct  coal
 
 /////////////////////////////////////////////////////
 // coal makers
-/* construction for coal, implementation from integer sequence */
+/* construction for coal, from string */
 template< int N, typename T, T... Nums >
 constexpr coal< N >
-make_coal_impl( const char* str, std::integer_sequence< T, Nums... > )
+make_coal_from_string_impl( const char* str, std::integer_sequence< T, Nums... > )
 {
     return { str[Nums] ... };
 }
 
-/* construction for coal */
+
 template< int N >
 constexpr coal< N >
-make_coal( const char (&str)[N] )
+make_coal_from_string( const char (&str)[N] )
 {
-    return make_coal_impl< N >( str, std::make_integer_sequence< int, N >() );
+    return make_coal_from_string_impl< N >( str, std::make_integer_sequence< int, N >() );
+}
+
+/* construction for coal, from int */
+constexpr int
+make_coal_from_int_reduce( int i, int num )
+{
+    if( num == 0 ) return  i;
+
+    int result = i;
+    int reduction = make_coal_from_int_compute_length( i ) - 1;
+    for( int i = 0; i < reduction; ++i )
+        result /= 10;
+    for( int i = 0; i < reduction; ++i )
+        result *= 10;
+    result = i - result;
+    return  make_coal_from_int_reduce( result, num - 1 );
+}
+
+constexpr const char
+make_coal_from_int_impl_getchar( int i, int num )
+{
+    int result = make_coal_from_int_reduce( i, num );
+    int reduction = make_coal_from_int_compute_length( result ) - 1;
+    for( int i = 0; i < reduction; ++i )
+        result /= 10;
+
+    return  result + '0';
+}
+
+template< int N, typename T, T... Nums >
+constexpr coal< N >
+make_coal_from_int_impl( int i, std::integer_sequence< T, Nums... > )
+{
+    return { make_coal_from_int_impl_getchar( i, Nums ) ... };
 }
 
 
+template< int N >
+constexpr coal< N >
+make_coal_from_int( int i )
+{
+    return make_coal_from_int_impl< N >( i, std::make_integer_sequence< int, N - 1 >() );
+}
+
+
+constexpr int
+make_coal_from_int_compute_length( int n )
+{
+    int i = 0;
+    for( i = 0; n > 0; ++i )
+        n /= 10;
+
+    return  i == 0 ? 1 : i;
+}
+
+
+/////////////////////////////////////////////////////
+// coal operators
 template< int N, int L >
 constexpr coal< N + L - 1>
 operator+( const coal< N >& A, const coal< L >& B )
@@ -93,7 +148,8 @@ operator+( const coal< N >& A, const coal< L >& B )
 // coal utility macro
 /* utility shortcut for construction of coal */
 #define coal            constexpr  auto
-#define coalFromString(i)    ::__coal__::make_coal( i )
+#define coalFromString(i)   ::__coal__::make_coal_from_string( i )
+#define coalFromInt(i)      ::__coal__::make_coal_from_int< ::__coal__::make_coal_from_int_compute_length( i ) + 1 >( i )
 
 
 } // namespace __coal__
