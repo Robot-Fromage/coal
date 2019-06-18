@@ -10,29 +10,46 @@
 
 #include <iostream>
 #include <assert.h>
+#include <tuple>
 #include <coal_core>
+
+struct FInfo
+{
+    const  int       m1; // 1
+    const  int       m2; // 2
+    const  int       m3; // 3
+    const  int       m4; // 4
+    const  int       m5; // 5
+};
+
+
+/////////////////////////////////////////////////////
+// ParseSpecStr
+coalFunc_RetVal( FInfo, Parse )
+{
+    return  { 8 };
+}
+
+
+template< int H, int N >
+static
+constexpr
+const
+int
+Rec( const ::__coal__::coal_t<N> iCoal )
+{
+    //return  iCoal.substring< iCoal.querySplitWordSize( ",", 0 ) >( iCoal.querySplitWordStart( ",", 0 ) )
+    int val =  iCoal.substring< iCoal.querySplitWordSize( ",", 0 ) >( iCoal.querySplitWordStart( ",", 0 ) ).toInt();
+    return  0;
+}
 
 
 int main()
 {
-    coal a = coalFromString( "Salut123" );
-    coal b = coalFromString( "Mec" );
-    coal c = a.append( b.s );
-    coal d = a.append( b );
-    coal lel = coalFromString( "Jambon" ).prepend( "ok" );
-    coal z = a.copy();
-    coal jeje = a + b + c + d + lel + z;
-    coal akk = coalFromInt( 99999991 );
-
-    std::cout << a << std::endl;
-    std::cout << b << std::endl;
-    std::cout << c << std::endl;
-    std::cout << d << std::endl;
-    std::cout << char( '0' + 9 ) << std::endl;
-    std::cout << int( '0' ) << std::endl;
-    std::cout << int( '9' ) << std::endl;
-    std::cout << jeje << std::endl;
-
+    coal split_str      = coalFromString( "654,5141,21132,478,45" );
+    coal kojok  = coal_split( split_str, ",", 0 );
+    constexpr FInfo nfo = Parse( split_str );
+    constexpr uint32_t je = split_str.hash();
     return 0;
 }
 

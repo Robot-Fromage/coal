@@ -1,4 +1,4 @@
-# ULIS
+# COAL
 ![alt text](http://clementberthaud.com/dev/dep/ULIS/media/com/ulis_100.png "coal")
 
 COnstexpr Alphanumeric Literals
