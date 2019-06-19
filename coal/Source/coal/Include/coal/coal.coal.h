@@ -128,10 +128,12 @@ template< int N, int L > constexpr coal_t< N + L - 1> operator+( const char (&A)
 #define coalMakeFromInt(i)              ::__coal__::make_coal_from_int< ::__coal__::count_digits( i ) + 1 >( i )
 #define coalSplitElem( obj, sep, ind )  obj.substring< obj.querySplitWordSize( sep, ind ) >( obj.querySplitWordStart( sep, ind ) )
 
-
-#define coalConstexprWrapper(...)       struct { static constexpr auto value() { return __VA_ARGS__; } }
+/////////////////////////////////////////////////////
+// coal constexpr args macro
+#define coalConstexprWrapper(...)               struct { static constexpr auto value() { return __VA_ARGS__; } }
+#define coalMakeConstexprArg( iName, iValue )   using iName = coalConstexprWrapper( iValue );
 // This is C++17, not compliant with C++14 as the rest of the lib
-//#define coalConstexprArg(...)           [] { using R = coalConstexprWrapper(__VA_ARGS__); return R{}; }()
+//#define coalConstexprArg(...)                 [] { using R = coalConstexprWrapper(__VA_ARGS__); return R{}; }()
 
 
 } // namespace __coal__
