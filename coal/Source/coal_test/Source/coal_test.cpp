@@ -93,6 +93,7 @@ static_assert( info.m5 == m5, "..." );
 int main()
 {
     std::cout << mangled << std::endl;
+    constexpr uint32_t a = mangled.hash();
     return 0;
 }
 
