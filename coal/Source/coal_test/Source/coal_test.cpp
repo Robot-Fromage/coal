@@ -38,7 +38,7 @@ GenStartSeq( X )
 }
 
 
-coal str = coalMakeFromString( "654,5141,21132,478,45" );
+coal str = coalMakeFromString( "654,5141,21132,478,45,2888" );
 
 
 int main()
@@ -50,6 +50,7 @@ int main()
     //constexpr auto jeeee = std::integer_sequence< int, str.querySplitWordStart( ",", 0 ), str.querySplitWordStart( ",", 1 ) >();
     using forwardConstexprArg0 = coalConstexprWrapper( str );
     coal jajo1 = GenStartSeq( forwardConstexprArg0{} );
+    coal test = coalMakeFromInt( 569 );
 
     return 0;
 }

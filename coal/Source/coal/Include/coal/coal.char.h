@@ -87,8 +87,34 @@ indexof( const char* word, const char* str, int from = 0 )
 
     return  -1;
 }
+
+
+constexpr int
+count_digits( int n )
+{
+    int i = 0;
+    for( i = 0; n > 0; ++i )
+        n /= 10;
+
+    return  i == 0 ? 1 : i;
+}
+
+
+constexpr int
+strip_most_significant_digits( int iNumber, int iIndex )
+{
+    if( iIndex == 0 ) return  iNumber;
+
+    int result = iNumber;
+    int reduction = count_digits( iNumber ) - 1;
+    for( int i = 0; i < reduction; ++i )
+        result /= 10;
+    for( int i = 0; i < reduction; ++i )
+        result *= 10;
+    result = iNumber - result;
+    return  strip_most_significant_digits( result, iIndex - 1 );
+}
+
+
 } // namespace __coal__
-
-
-//constexpr const int ct_char_index_without_digits ( char c, const char* s ) { int cind = 0; int lpos = 0; while(1) { if( s[cind] == c ) { break; } if( !is_digit( s[cind] ) ) { ++lpos; } ++cind; } return lpos; }
 
