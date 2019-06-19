@@ -129,7 +129,8 @@ template< int N, int L > constexpr coal_t< N + L - 1> operator+( const char (&A)
 
 
 #define coalConstexprWrapper(...)       struct { static constexpr auto value() { return __VA_ARGS__; } }
-#define coalConstexprArg(...)           [] { using R = coalConstexprWrapper(__VA_ARGS__); return R{}; }()
+// This is C++17, not compliant with C++14 as the rest of the lib
+//#define coalConstexprArg(...)           [] { using R = coalConstexprWrapper(__VA_ARGS__); return R{}; }()
 
 
 } // namespace __coal__
