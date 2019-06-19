@@ -19,7 +19,7 @@ namespace __coal__ {
 
 
 /////////////////////////////////////////////////////
-// coal Constexpr cpp0x compliant string manipulation operations
+// coal Constexpr compliant string manipulation operations
 template< int N >
 struct  coal_t
 {
@@ -80,6 +80,8 @@ struct  coal_t
     template< int L > constexpr const coal_t< N + L - 1 > prepend( const char (&str)[L] ) const { return make_coal_prepend< N + L - 1 >( s, str ); }
     template< int L > constexpr const coal_t< N + L - 1 > prepend( const coal_t< L >& i ) const { return  prepend( i.s ); }
 
+    /* iter_count */
+
     /* copy */
     constexpr const coal_t< N > copy() const { return  *this; }
 };
@@ -104,6 +106,7 @@ make_coal_from_string( const char (&str)[N] )
 }
 
 
+/* construction for coal, from int */
 constexpr int
 make_coal_from_int_compute_length( int n )
 {
@@ -115,7 +118,6 @@ make_coal_from_int_compute_length( int n )
 }
 
 
-/* construction for coal, from int */
 constexpr int
 make_coal_from_int_reduce( int i, int num )
 {
@@ -160,41 +162,21 @@ make_coal_from_int( int i )
 
 /////////////////////////////////////////////////////
 // coal operators
-template< int N, int L >
-constexpr coal_t< N + L - 1>
-operator+( const coal_t< N >& A, const coal_t< L >& B )
-{
-    return  A.append( B );
-}
-
-
-template< int N, int L >
-constexpr coal_t< N + L - 1>
-operator+( const coal_t< N >& A, const char (&B)[L] )
-{
-    auto C = make_coal_from_string( B );
-    return  A.append( C );
-}
-
-
-template< int N, int L >
-constexpr coal_t< N + L - 1>
-operator+( const char (&A)[N], const coal_t< L >& B )
-{
-    auto C = make_coal_from_string( A );
-    return  B.prepend( C );
-}
-
+template< int N, int L > constexpr coal_t< N + L - 1> operator+( const coal_t< N >& A,  const coal_t< L >& B )  { return  A.append( B ); }                              // coal coal
+template< int N, int L > constexpr coal_t< N + L - 1> operator+( const coal_t< N >& A,  const char (&B)[L]   )  { return  A.append( make_coal_from_string( B ) ); }     // coal char
+template< int N, int L > constexpr coal_t< N + L - 1> operator+( const char (&A)[N],    const coal_t< L >& B )  { return  B.prepend( make_coal_from_string( A ) ); }    // char coal
 
 /////////////////////////////////////////////////////
 // coal utility macro
-/* utility shortcut for construction of coal */
-#define coal                constexpr  auto
-#define coalFromString(i)   ::__coal__::make_coal_from_string( i )
-#define coalFromInt(i)      ::__coal__::make_coal_from_int< ::__coal__::make_coal_from_int_compute_length( i ) + 1 >( i )
+#define coal                            constexpr  auto
+#define coalMakeFromString(i)           ::__coal__::make_coal_from_string( i )
+#define coalMakeFromInt(i)              ::__coal__::make_coal_from_int< ::__coal__::make_coal_from_int_compute_length( i ) + 1 >( i )
+#define coalSplitElem( obj, sep, ind )  obj.substring< obj.querySplitWordSize( sep, ind ) >( obj.querySplitWordStart( sep, ind ) )
 
-#define coalFunc_RetVal( iRetType, iName )  template< int N > static constexpr const iRetType iName( const ::__coal__::coal_t<N> iCoal )
-#define coal_split( obj, sep, ind )         obj.substring< obj.querySplitWordSize( sep, ind ) >( obj.querySplitWordStart( sep, ind ) )
+
+#define coalConstexprWrapper(...)       struct { static constexpr auto value() { return __VA_ARGS__; } }
+#define coalConstexprArg(...)           [] { using R = coalConstexprWrapper(__VA_ARGS__); return R{}; }()
+
 
 } // namespace __coal__
 

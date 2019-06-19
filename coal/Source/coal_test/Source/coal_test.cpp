@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <assert.h>
-#include <tuple>
 #include <coal_core>
 
 struct FInfo
@@ -23,33 +22,35 @@ struct FInfo
 };
 
 
-/////////////////////////////////////////////////////
-// ParseSpecStr
-coalFunc_RetVal( FInfo, Parse )
+template< typename X, typename T, T... Nums >
+constexpr  auto
+GenStartSeq_Imp( X, std::integer_sequence< T, Nums... > )
 {
-    return  { 8 };
+    return  std::integer_sequence< int, X::value().querySplitWordStart( ",", Nums ) ... >();
+}
+
+template< typename X >
+constexpr  auto
+GenStartSeq( X )
+{
+    using forwardConstexprArg0 = coalConstexprWrapper( X::value() );
+    return  GenStartSeq_Imp( forwardConstexprArg0{}, std::make_integer_sequence< int, X::value().querySplitNum( "," ) >() );
 }
 
 
-template< int H, int N >
-static
-constexpr
-const
-int
-Rec( const ::__coal__::coal_t<N> iCoal )
-{
-    //return  iCoal.substring< iCoal.querySplitWordSize( ",", 0 ) >( iCoal.querySplitWordStart( ",", 0 ) )
-    int val =  iCoal.substring< iCoal.querySplitWordSize( ",", 0 ) >( iCoal.querySplitWordStart( ",", 0 ) ).toInt();
-    return  0;
-}
+coal str = coalMakeFromString( "654,5141,21132,478,45" );
 
 
 int main()
 {
-    coal split_str      = coalFromString( "654,5141,21132,478,45" );
-    coal kojok  = coal_split( split_str, ",", 0 );
-    constexpr FInfo nfo = Parse( split_str );
-    constexpr uint32_t je = split_str.hash();
+    constexpr int num1 = coalSplitElem( str, ",", 0 ).toInt();
+    constexpr int num2 = coalSplitElem( str, ",", 1 ).toInt();
+    constexpr int num3 = coalSplitElem( str, ",", 2 ).toInt();
+    //...
+    //constexpr auto jeeee = std::integer_sequence< int, str.querySplitWordStart( ",", 0 ), str.querySplitWordStart( ",", 1 ) >();
+    using forwardConstexprArg0 = coalConstexprWrapper( str );
+    coal jajo1 = GenStartSeq( forwardConstexprArg0{} );
+
     return 0;
 }
 
