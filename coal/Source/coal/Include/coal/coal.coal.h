@@ -35,6 +35,7 @@ struct  coal_t
     constexpr const char*   data()                              const { return s; }
     constexpr int           size()                              const { return N; }
     constexpr int           length()                            const { return N; }
+    constexpr int           count()                             const { return N; }
     constexpr int           toInt()                             const { return stoi( s ); }
     constexpr bool          isInt()                             const { return is_number( s ); }
     constexpr uint32_t      hash()                              const { return COAL_CRC32_STR( s ); }
