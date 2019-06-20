@@ -58,7 +58,6 @@ constexpr int
 stoi( const char* s )
 {
     int r = 0;
-    int l = strlen( s );
     for( int i = 0; i < strlen( s ); ++i )
         r = r * 10 + int( s[i] - '0' );
     return  r;

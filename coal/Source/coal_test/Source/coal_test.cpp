@@ -14,8 +14,6 @@
 #include <assert.h>
 
 
-coal str = coalMakeFromString( "_M5:654_M1:5141_M2:21132_M4:478_M3:45" );
-
 struct FInfo
 {
     const  int       m1;
@@ -30,6 +28,7 @@ constexpr  FInfo
 ParseInfo( X )
 {
     coal el = X::value();
+
     constexpr int sizeofsep = coalMakeFromString( "_MX:" ).count() - 1;
     constexpr int im1s = el.indexOf( "_M1:" ) + sizeofsep;
     constexpr int im2s = el.indexOf( "_M2:" ) + sizeofsep;
@@ -55,11 +54,11 @@ ParseInfo( X )
     constexpr int im4d = im4er - im4s;
     constexpr int im5d = im5er - im5s;
 
-    coal m1 = el.substring< im1d >( im1s );
-    coal m2 = el.substring< im2d >( im2s );
-    coal m3 = el.substring< im3d >( im3s );
-    coal m4 = el.substring< im4d >( im4s );
-    coal m5 = el.substring< im5d >( im5s );
+    coal m1 = coalSubstring( el, im1s, im1d );
+    coal m2 = coalSubstring( el, im2s, im2d );
+    coal m3 = coalSubstring( el, im3s, im3d );
+    coal m4 = coalSubstring( el, im4s, im4d );
+    coal m5 = coalSubstring( el, im5s, im5d );
 
     constexpr int im1 = m1.toInt();
     constexpr int im2 = m2.toInt();
@@ -82,8 +81,10 @@ coal M4 = coalMakeFromString( "_M4:" ) + coalMakeFromInt( m4 );
 coal M5 = coalMakeFromString( "_M5:" ) + coalMakeFromInt( m5 );
 coal mangled = M5 + M4 + M2 + M3 + M1;
 static_assert( mangled == coalMakeFromString( "_M5:555_M4:444_M2:222_M3:333_M1:111" ), "..." );
+
 coalMakeConstexprArg( const_mangled, mangled );
 constexpr FInfo info = ParseInfo( const_mangled{} );
+
 static_assert( info.m1 == m1, "..." );
 static_assert( info.m2 == m2, "..." );
 static_assert( info.m3 == m3, "..." );
@@ -92,8 +93,6 @@ static_assert( info.m5 == m5, "..." );
 
 int main()
 {
-    std::cout << mangled << std::endl;
-    constexpr uint32_t a = mangled.hash();
     return 0;
 }
 

@@ -11,4 +11,5 @@
 #pragma once
 
 #include "coal/coal.coal.h"
-#include "coal/coal.list.h"
+// Does not compile with CLANG
+//#include "coal/coal.list.h"

@@ -128,6 +128,15 @@ template< int N, int L > constexpr coal_t< N + L - 1> operator+( const char (&A)
 #define coalMakeFromInt(i)              ::__coal__::make_coal_from_int< ::__coal__::count_digits( i ) + 1 >( i )
 #define coalSplitElem( obj, sep, ind )  obj.substring< obj.querySplitWordSize( sep, ind ) >( obj.querySplitWordStart( sep, ind ) )
 
+
+#if defined(__clang__)
+#define coalSubstring( obj, start, len ) obj.template substring< len >( start )
+#elif defined(__GNUC__) || defined(__GNUG__)
+#define coalSubstring( obj, start, len ) obj.template substring< len >( start )
+#elif defined(_MSC_VER)
+#define coalSubstring( obj, start, len ) obj.substring< len >( start )
+#endif
+
 /////////////////////////////////////////////////////
 // coal constexpr args macro
 #define coalConstexprWrapper(...)               struct { static constexpr auto value() { return __VA_ARGS__; } }
