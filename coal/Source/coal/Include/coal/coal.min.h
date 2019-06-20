@@ -62,16 +62,3 @@ int N,int L>constexpr coal_t<N+L-1>operator+(const coal_t<N>&A,const coal_t<L>&B
 #define coalConstexprWrapper(...)struct{static constexpr auto value(){return __VA_ARGS__;}}
 #define coalMakeConstexprArg(iName,iValue)using iName=coalConstexprWrapper(iValue);
 }
-// coal.list
-namespace __coal__{template<typename iCoal,typename iSep,typename T,T... Nums>constexpr auto make_coal_list_as_tuple_imp(std::integer_sequence<T,Nums...>){return std::make_tuple(
-coalSplitElem(iCoal::value(),iSep::value(),Nums)...);}template<typename iCoal,typename iSep>constexpr auto make_coal_list_as_tuple(iCoal,iSep){return make_coal_list_as_tuple_imp<iCoal,iSep>(
-std::make_integer_sequence<int,iCoal::value().querySplitNum(iSep::value())>());}template<typename iList,typename iSep>constexpr auto coal_list_cat(iList,iSep){return 0;}
-#define coalList constexpr auto
-#define coalSplit(iCoal,iSep)::__coal__::make_coal_list_as_tuple(iCoal,iSep)
-#define coalMakeSplitList(iName,iCoal,iSep)\
-coalMakeConstexprArg(__FILE__ ## __LINE__ ## __const__ ## iCoal,iCoal);\
-coalMakeConstexprArg(__FILE__ ## __LINE__ ## __const__ ## sep,iSep);\
-coalList iName=coalSplit(__FILE__ ## __LINE__ ## __const__ ## iCoal{},__FILE__ ## __LINE__ ## __const__ ## sep{});
-#define coalListGet(iName,iIndex)std::get<iIndex>(iName)
-#define coalListSize(iName)std::tuple_size<decltype(iName)>::value
-}
