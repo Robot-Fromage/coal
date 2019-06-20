@@ -72,7 +72,7 @@ struct MM{
 };
 
 
-// This is the stop-recursion fu_CTion
+// This is the stop-recursion function
 template<int size, class dummy>
 struct MM<size, size, dummy>{
   static constexpr unsigned int crc32(const char * str, unsigned int prev_crc = 0xFFFFFFFF)
@@ -81,9 +81,31 @@ struct MM<size, size, dummy>{
   }
 };
 
+/////////////////////////////////////////////////////
+// Alternative Implementation
+constexpr unsigned int crc32b( const char *message) {
+   int i = 0;
+   int j = 0;
+   unsigned int byte = 0;
+   unsigned int crc = 0;
+   unsigned int mask = 0;
 
-// This don't take into account the nul char
-#define COAL_CRC32_STR(x) (MM<sizeof(x)-1>::crc32(x))
+   i = 0;
+   crc = 0xFFFFFFFF;
+   while (message[i] != 0) {
+      byte = message[i];            // Get next byte.
+      crc = crc ^ byte;
+      for (j = 7; j >= 0; j--) {    // Do eight times.
+         mask = -(crc & 1);
+         crc = (crc >> 1) ^ (0xEDB88320 & mask);
+      }
+      i = i + 1;
+   }
+   return ~crc;
+}
 
+
+//#define COAL_CRC32_STR(x) (::__coal__::MM<sizeof(x)-1>::crc32(x))
+#define COAL_CRC32_STR(x) (::__coal__::crc32b(x))
 
 } // namespace __coal__
