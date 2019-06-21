@@ -102,6 +102,10 @@ template< int N, typename T, T... Nums >    constexpr coal_t< N > make_coal_from
 template< int N >                           constexpr coal_t< N > make_coal_from_string     ( const char (&str)[N] )                                    { return make_coal_from_string_impl< N >( str, std::make_integer_sequence< int, N >() ); }
 
 /////////////////////////////////////////////////////
+// coal maker from cstr
+template< int N > constexpr coal_t< N > make_coal_from_cstr( const char* str ) { return make_coal_from_string_impl< N >( str, std::make_integer_sequence< int, N >() ); }
+
+/////////////////////////////////////////////////////
 // coal maker from int
 constexpr const char
 make_coal_from_int_impl_getchar( int i, int num )
@@ -125,6 +129,7 @@ template< int N, int L > constexpr coal_t< N + L - 1> operator+( const char (&A)
 // coal utility macro
 #define coal                            constexpr  auto
 #define coalMakeFromString(i)           ::__coal__::make_coal_from_string( i )
+#define coalMakeFromCstr(i)             ::__coal__::make_coal_from_cstr< ::__coal__::strlen( i ) + 1 >( i )
 #define coalMakeFromInt(i)              ::__coal__::make_coal_from_int< ::__coal__::count_digits( i ) + 1 >( i )
 #define coalSplitElem( obj, sep, ind )  obj.substring< obj.querySplitWordSize( sep, ind ) >( obj.querySplitWordStart( sep, ind ) )
 

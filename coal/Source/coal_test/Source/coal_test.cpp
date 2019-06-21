@@ -93,6 +93,10 @@ static_assert( info.m5 == m5, "..." );
 
 int main()
 {
+    constexpr const char* testvar = "Hello World";
+    coal testcoal0 = coalMakeFromString( "Hello World" );
+    coal testcoal1 = coalMakeFromCstr( testvar );
+    static_assert( testcoal0 == testcoal1, "..." );
     return 0;
 }
 
