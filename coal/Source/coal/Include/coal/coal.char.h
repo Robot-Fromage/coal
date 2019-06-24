@@ -89,6 +89,19 @@ indexof( const char* word, const char* str, int from = 0 )
 
 
 constexpr int
+indexof( char letter, const char* str, int from = 0 )
+{
+    int ls = strlen( str );
+
+    for( int i = from; i < ls; ++i )
+        if( str[i] == letter )
+            return  i;
+
+    return  -1;
+}
+
+
+constexpr int
 count_digits( int n )
 {
     int i = 0;
