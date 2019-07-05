@@ -83,7 +83,7 @@ struct MM<size, size, dummy>{
 
 /////////////////////////////////////////////////////
 // Alternative Implementation
-constexpr unsigned int crc32b( const char *message) {
+constexpr unsigned int crc32b( const char *message ) {
    int i = 0;
    int j = 0;
    unsigned int byte = 0;
@@ -105,7 +105,30 @@ constexpr unsigned int crc32b( const char *message) {
 }
 
 
-//#define COAL_CRC32_STR(x) (::__coal__::MM<sizeof(x)-1>::crc32(x))
-#define COAL_CRC32_STR(x) (::__coal__::crc32b(x))
+constexpr unsigned int crc32c( const unsigned char *data, int length ) {
+   int i = 0;
+   int j = 0;
+   unsigned int byte = 0;
+   unsigned int crc = 0;
+   unsigned int mask = 0;
+
+   i = 0;
+   crc = 0xFFFFFFFF;
+   while( i < length ) {
+      byte = data[i];            // Get next byte.
+      crc = crc ^ byte;
+      for (j = 7; j >= 0; j--) {    // Do eight times.
+         mask = -(crc & 1);
+         crc = (crc >> 1) ^ (0xEDB88320 & mask);
+      }
+      i = i + 1;
+   }
+   return ~crc;
+}
+
+
+#define COAL_CRC32_FAST(x)          (::__coal__::MM<sizeof(x)-1>::crc32(x))
+#define COAL_CRC32_STR(x)           (::__coal__::crc32b(x))
+#define COAL_CRC32_DAT( dat, len )  (::__coal__::crc32c(dat, len))
 
 } // namespace __coal__

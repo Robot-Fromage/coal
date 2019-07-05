@@ -11,6 +11,7 @@
 #pragma once
 
 #include <utility>
+#include <stdint.h>
 #include "coal/coal.char.h"
 #include "coal/coal.crc32.h"
 
