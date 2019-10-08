@@ -12,6 +12,7 @@
 #include <coal_core>
 #include <tuple>
 #include <assert.h>
+#include <bitset>
 
 
 struct FInfo
@@ -93,6 +94,17 @@ static_assert( info.m5 == m5, "..." );
 
 int main()
 {
+    constexpr unsigned int ref = 2044517703U;
+    constexpr unsigned int hashcrc32 = __coal__::crc32b( "ok" );
+    static_assert( ref == hashcrc32, "..." );
+    uint32_t a = 564653;
+    uint32_t b = static_cast< unsigned int >( -( (int)a) );;
+
+    std::bitset<32> xa(a);
+    std::bitset<32> xb(b);
+    std::cout << xa << std::endl;
+    std::cout << xb << std::endl;
+
     constexpr const char* testvar = "Hello World";
     coal testcoal0 = coalMakeFromString( "Hello World" );
     coal testcoal1 = coalMakeFromCstr( testvar );

@@ -96,7 +96,7 @@ constexpr unsigned int crc32b( const char *message ) {
       byte = message[i];            // Get next byte.
       crc = crc ^ byte;
       for (j = 7; j >= 0; j--) {    // Do eight times.
-         mask = -(crc & 1);
+         mask = static_cast< unsigned int >( -( (int)crc & 1) );
          crc = (crc >> 1) ^ (0xEDB88320 & mask);
       }
       i = i + 1;
@@ -118,7 +118,7 @@ constexpr unsigned int crc32c( const unsigned char *data, int length ) {
       byte = data[i];            // Get next byte.
       crc = crc ^ byte;
       for (j = 7; j >= 0; j--) {    // Do eight times.
-         mask = -(crc & 1);
+         mask = static_cast< unsigned int >( -( (int)crc & 1) );
          crc = (crc >> 1) ^ (0xEDB88320 & mask);
       }
       i = i + 1;
