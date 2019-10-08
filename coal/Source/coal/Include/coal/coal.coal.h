@@ -113,7 +113,7 @@ make_coal_from_int_impl_getchar( int i, int num )
 {
     int result = strip_most_significant_digits( i, num );
     int reduction = count_digits( result ) - 1;
-    for( int i = 0; i < reduction; ++i )
+    for( int j = 0; j < reduction; ++j )
         result /= 10;
     return  result + '0';
 }
