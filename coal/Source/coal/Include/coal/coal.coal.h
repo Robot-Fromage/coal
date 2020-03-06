@@ -99,7 +99,7 @@ struct  coal_t
 
 /////////////////////////////////////////////////////
 // coal maker from string
-template< int N, typename T, T... Nums >    constexpr coal_t< N > make_coal_from_string_impl( const char* str, std::integer_sequence< T, Nums... > )    { return { str[Nums] ... }; }
+template< int N, typename T, T... Nums >    constexpr coal_t< N > make_coal_from_string_impl( const char* str, std::integer_sequence< T, Nums... > )    { return { { str[Nums] ... } }; }
 template< int N >                           constexpr coal_t< N > make_coal_from_string     ( const char (&str)[N] )                                    { return make_coal_from_string_impl< N >( str, std::make_integer_sequence< int, N >() ); }
 
 /////////////////////////////////////////////////////
